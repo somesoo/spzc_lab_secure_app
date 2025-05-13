@@ -42,12 +42,12 @@ jobs:
 
           cat stats.json
 
-          critical=$(jq '.critical' stats.json)
+          critical=$(jq '.low' stats.json)
 
-          echo "Critical: $critical"
+          echo "LOW: $critical"
 
           if [ "$critical" -gt 0 ]; then
-            echo "Wykryto podatności krytyczne. Przerywam build."
+            echo "Wykryto podatności low. Przerywam build."
             exit 1
           fi
 
