@@ -42,7 +42,7 @@ jobs:
 
           cat stats.json
 
-          critical=$(jq '.low' stats.json)
+          critical=$(jq '.Low' stats.json)
 
           echo "LOW: $critical"
 
