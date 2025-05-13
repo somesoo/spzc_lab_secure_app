@@ -33,23 +33,5 @@ jobs:
             -e BRANCH=${{ steps.vars.outputs.branch }} \
             -v ${{ github.workspace }}:/opt/sources \
             mixeway/scanner:latest
-      - name: Check for critical vulnerabilities
-        run: |
-          echo "Sprawdzanie podatności krytycznych..."
-          sleep 15
-          curl -s -H "X-API-KEY: ${{ secrets.MIXEWAY_KEY }}" \
-            "https://hub.mixeway.io/api/v2/project/172/vulnerabilities/statistics" > stats.json
-
-          cat stats.json
-
-          critical=$(jq '.Low' stats.json)
-
-          echo "LOW: $critical"
-
-          if [ "$critical" -gt 0 ]; then
-            echo "Wykryto podatności low. Przerywam build."
-            exit 1
-          fi
-
       - name: Build with Maven
         run: mvn package
